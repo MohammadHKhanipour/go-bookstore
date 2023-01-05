@@ -4,15 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/mohammadhkhanipour/go-bookstore/pkg/models"
+	"github.com/mohammadhkhanipour/go-bookstore/pkg/utils"
 	"net/http"
 	"strconv"
-	"github.com/mohammadhkhanipour/go-bookstore/pkg/utils"
-	"github.com/mohammadhkhanipour/go-bookstore/pkg/models"
 )
 
 var NewBook models.Book
 
-func GetBook(w http.ResponseWriter, r *http.Request){
+func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()
 	res, _ := json.Marshal(newBooks)
 	w.Header().Set("Content-Type", "pkglication/json")
@@ -20,10 +20,10 @@ func GetBook(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
-func GetBookById(w http.ResponseWriter, r *http.Request){
+func GetBookById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
-	ID, err := strconv.ParseInt(bookId,0,0)
+	ID, err := strconv.ParseInt(bookId, 0, 0)
 	if err != nil {
 		fmt.Println(string("\033[31m"), "Error while parsing", string("\033[0m"))
 	}
@@ -34,7 +34,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
-func CreateBook(w http.ResponseWriter, r *http.Request){
+func CreateBook(w http.ResponseWriter, r *http.Request) {
 	createBook := &models.Book{}
 	utils.ParseBody(r, createBook)
 	b := createBook.CreateBook()
@@ -43,10 +43,10 @@ func CreateBook(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
-func DeleteBook(w http.ResponseWriter, r *http.Request){
+func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookID := vars["bookId"]
-	ID, err := strconv.ParseInt(bookID,0,0)
+	ID, err := strconv.ParseInt(bookID, 0, 0)
 	if err != nil {
 		fmt.Println(string("\033[31m"), "Error while parsing", string("\033[0m"))
 	}
@@ -57,12 +57,12 @@ func DeleteBook(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
-func UpdateBook(w http.ResponseWriter, r *http.Request){
+func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	var updateBook = &models.Book{}
 	utils.ParseBody(r, updateBook)
 	vars := mux.Vars(r)
 	bookID := vars["bookId"]
-	ID, err := strconv.ParseInt(bookID,0,0)
+	ID, err := strconv.ParseInt(bookID, 0, 0)
 	if err != nil {
 		fmt.Println(string("\033[31m"), "Error while parsing", string("\033[0m"))
 	}
